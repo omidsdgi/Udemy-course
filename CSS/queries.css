@@ -1,8 +1,5 @@
 /* rem and em do NOT depend on html font-size in media queries! Instead, 1rem = 1em = 16px */
 
-/**************************/
-/* BELOW 1344px (Smaller desktops) */
-/**************************/
 
 @media (max-width: 84em) {
     .hero {
@@ -18,9 +15,6 @@
     }
 }
 
-/**************************/
-/* BELOW 1200px (Landscape Tablets) */
-/**************************/
 
 @media (max-width: 75em) {
     html {
@@ -58,9 +52,6 @@
     }
 }
 
-/**************************/
-/* BELOW 944px (Tablets) */
-/**************************/
 
 @media (max-width: 59em) {
     html {
@@ -109,8 +100,7 @@
     }
 
     .cta {
-        /* 3/5 = 60% + 2/5 = 40% */
-        grid-template-columns: 3fr 2fr;
+      grid-template-columns: 3fr 2fr;
     }
 
     .cta-form {
@@ -142,18 +132,8 @@
         align-items: center;
         justify-content: center;
         transition: all 0.5s ease-in;
-
-        /* Hide navigation */
-        /* Allows NO transitions at all */
-        /* display: none; */
-
-        /* 1) Hide it visually */
         opacity: 0;
-
-        /* 2) Make it unaccessible to mouse and keyboard */
         pointer-events: none;
-
-        /* 3) Hide it from screen readers */
         visibility: hidden;
     }
 
@@ -183,9 +163,6 @@
     }
 }
 
-/**************************/
-/* BELOW 704px (Smaller tablets) */
-/**************************/
 
 @media (max-width: 44em) {
     .grid--3-cols,
@@ -222,9 +199,7 @@
     }
 }
 
-/**************************/
-/* BELOW 544px (Phones) */
-/**************************/
+
 
 @media (max-width: 34em) {
     .grid {

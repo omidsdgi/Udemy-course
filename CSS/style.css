@@ -1,6 +1,6 @@
-/**************************/
+
 /* HEADER */
-/**************************/
+
 
 .header {
     display: flex;
@@ -18,9 +18,8 @@
     height: 2.2rem;
 }
 
-/**************************/
+
 /* NAVIGATION */
-/**************************/
 
 .main-nav-list {
     list-style: none;
@@ -94,9 +93,8 @@
     margin-top: 9.6rem;
 }
 
-/**************************/
+
 /* HERO SECTION */
-/**************************/
 
 .section-hero {
     background-color: #fdf2e9;
@@ -156,9 +154,9 @@
     font-weight: 700;
 }
 
-/**************************/
+
 /* FEATURED IN SECTION */
-/**************************/
+
 
 .section-featured {
     padding: 4.8rem 0 3.2rem 0;
@@ -185,9 +183,8 @@
     opacity: 50%;
 }
 
-/**************************/
+
 /* HOW IT WORKS SECTION */
-/**************************/
 
 .section-how {
     padding: 9.6rem 0;
@@ -226,11 +223,7 @@
 
 .step-img-box::before {
     width: 60%;
-    /* height: 60%; */
-
-    /* 60% of parent's width */
     padding-bottom: 60%;
-
     background-color: #fdf2e9;
     z-index: -2;
 }
@@ -247,9 +240,7 @@
     /* z-index: 10; */
 }
 
-/**************************/
 /* MEALS SECTION */
-/**************************/
 
 .section-meals {
     padding: 9.6rem 0;
@@ -333,9 +324,7 @@
     font-size: 1.8rem;
 }
 
-/**************************/
 /* TESTIMONIALS SECTION */
-/**************************/
 
 .section-testimonials {
     background-color: #fdf2e9;
@@ -393,9 +382,7 @@
     transform: scale(1.1);
 }
 
-/**************************/
 /* MEALS SECTION */
-/**************************/
 
 .section-pricing {
     padding: 9.6rem 0;
@@ -501,9 +488,7 @@
     line-height: 1.8;
 }
 
-/**************************/
 /* CTA SECTION */
-/**************************/
 
 .section-cta {
     /* top / right / bottom / left */
@@ -589,9 +574,7 @@
     box-shadow: 0 0 0 0.8rem rgba(253, 242, 233, 0.5);
 }
 
-/**************************/
 /* FOOTER */
-/**************************/
 
 .footer {
     padding: 12.8rem 0;
