@@ -8,7 +8,7 @@ html {
     margin: 0;
 }
 body{
-    font-family: "Poppins";
+    font-family: "Poppins",sen sans-serif;
     background-color:  #080710;
 
     display: flex;
