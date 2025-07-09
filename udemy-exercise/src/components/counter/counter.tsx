@@ -1,5 +1,6 @@
 import React from "react";
 import {useState} from "react";
+import {Button} from "@/components/counter/Button";
 
 const messages = [
     "Learn React ⚛️",
@@ -36,14 +37,19 @@ export function Counter() {
                         Step {step}:{`${messages [step-1]}`}
                     </p>
                     <div className={'buttons'}>
-                        <button style={{backgroundColor:"#7950f2", color:"#fff",margin:"4px 12px", }} onClick={previousHandler}><span style={{padding:"6px"}}>previous</span></button>
-                        <button style={{backgroundColor: "#7950f2", color: "#fff"}} onClick={nextHandler}><span style={{padding: "6px 12px"}}>next</span>
-                        </button>
+                        <Button bgColor="#7950f2" color="#fff" margin="4px 12px" onClick={previousHandler}>
+                            <span>👈</span>Previous
+                        </Button>
+
+                        <Button bgColor="#7950f2" color="#fff" margin="4px 12px" onClick={nextHandler}>
+                            Next <span>👉</span>
+                        </Button>
                     </div>
                 </div>)}
 
             <div className= 'steps'>
                 <div className= 'message' style= {{flexDirection: 'row',justifyContent: 'center' }}>
+
                     <button style={{backgroundColor:"#7950f2", color:"#fff",padding:"4px 12px", fontSize:"30px",margin:"10px" }} onClick={() => setStepper(s => s - 1)}>-</button>
                     <span>Step: {stepper}</span>
                     <button  style={{backgroundColor:"#7950f2", color:"#fff",padding:"2px 12px", fontSize:"30px",margin:"10px" }} onClick={() => setStepper(s => s + 1)}>+</button>
