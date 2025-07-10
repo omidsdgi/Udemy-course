@@ -1,13 +1,17 @@
-import {FriendType} from "@/components";
 import Image from "next/image";
 import Button from "@/components/eatSplit/Button";
+import {FriendType} from "@/pages";
 
-interface FriendProps {
+export interface FriendProps {
     friend: FriendType;
+    onSelection:(friend:FriendType)=>void;
+    selectedFriend:FriendType | null;
 }
-export function Friend({friend}: FriendProps) {
+export function Friend({friend,onSelection,selectedFriend}: FriendProps) {
+    const isSelected = selectedFriend?.id === friend.id
+
     return (
-        <li>
+        <li className={isSelected ? "selected" : ""}>
             <Image src={friend.image} alt={friend.name} width={46} height={46} />
             <h3>{friend.name}</h3>
 
@@ -18,10 +22,10 @@ export function Friend({friend}: FriendProps) {
                 <p className='green'>{friend.name} owe you {Math.abs(friend.balance)}$. </p>
             )}
             {friend.balance === 0 && (
-                <p>You and your  {friend.name} are even. </p>
+                <p>You and {friend.name} are even. </p>
             )}
 
-            <Button>Select</Button>
+            <Button onClick={()=>onSelection(friend)}>{isSelected ? "Close" :"Select"}</Button>
 
         </li>
     )

@@ -1,23 +1,32 @@
 import Button from "@/components/eatSplit/Button";
-import {useState} from "react";
+import {FormEvent, useState} from "react";
+import {FriendType} from "@/pages";
 
 
-export function FormAddFriend ({onAddFriend,friends}) {
+ interface Props {
+     onAddFriend:(friend: FriendType)=> void;
+ }
+
+export function FormAddFriend ({onAddFriend}: Props) {
     const [name, setName] = useState("")
     const [image, setImage] = useState("https://i.pravatar.cc/48")
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-onAddFriend(newFriend)
         if(!name || !image)return null
 
-        const id=crypto.randomUUID()
-        const newFriend = {
-            name,
-            image:`${image}?=${id}`,
-            balance:0,
+        const uuid=Number(crypto.randomUUID())
+        const id= Date.now()
+
+        const newFriend:FriendType = {
             id,
+            name,
+            image:`${image}?=${uuid}`,
+            balance:0,
         }
+        onAddFriend(newFriend)
+        setName("")
+        setImage("https://i.pravatar.cc/48")
     }
     return(
         <form className='form-add-friend' onSubmit={handleSubmit}>
