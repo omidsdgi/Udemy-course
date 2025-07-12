@@ -1,13 +1,11 @@
-import {useState} from "react";
+import {ReactNode, useState} from "react";
 import {Logo, NumResult, Search} from "@/components";
 
-export function NavBar() {
+export function NavBar({children}: {children: ReactNode}) {
 
     return (
         <nav className="nav-bar">
-         <Logo/>
-          <Search/>
-          <NumResult/>
+            {children}
         </nav>
     );
 }
