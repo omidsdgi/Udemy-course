@@ -4,6 +4,8 @@ interface StarType{
     onHoverIn:()=>void
     onHoverOut:()=>void
     full:boolean
+    color:string
+    size:number
 }
 export function Star({onRate,full,onHoverIn,onHoverOut,color,size}: StarType) {
     const starStyle={

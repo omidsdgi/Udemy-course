@@ -1,8 +1,5 @@
 import StarRating from "@/components/usePopcorn/star/StarRating";
 
-function Test(){
-    <StarRating color="beige"  />;
-}
 
 export default function Home() {
     return (
