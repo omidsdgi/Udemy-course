@@ -1,8 +1,14 @@
 import React from "react";
+import {MovieType} from "@/components";
 
-export function Movie({movie}) {
+interface Prop {
+    movie: MovieType;
+    onSelectMovie: (id: string) => void;
+}
+
+export function Movie({movie, onSelectMovie}:Prop) {
     return (
-        <li >
+        <li onClick={()=>onSelectMovie(movie.imdbID)} >
             <img src={movie.Poster} alt={`${movie.Title} poster`}/>
             <h3>{movie.Title}</h3>
             <div>

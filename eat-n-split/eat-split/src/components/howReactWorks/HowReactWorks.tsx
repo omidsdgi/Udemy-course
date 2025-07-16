@@ -1,9 +1,6 @@
 import { useState } from "react";
-interface ContentItem {
-    summary:string
-    details:string
-}
-const content:ContentItem[] = [
+
+const content = [
     {
         summary: "React is a library for building UIs",
         details:
@@ -21,15 +18,18 @@ const content:ContentItem[] = [
     },
 ];
 
-export default function HowReactWorks({content}:{content:ContentItem[]}) {
+export default function App() {
     return (
-        <div style={{ display: "flex", justifyContent: "center", width:"40%",margin:"0 auto" }}>
+        <div>
             <Tabbed content={content} />
         </div>
     );
 }
 
-function Tabbed({ content }:{content: ContentItem[]}) {
+// console.log(<DifferentContent test={23} />);
+// console.log(DifferentContent());
+
+function Tabbed({ content }) {
     const [activeTab, setActiveTab] = useState(0);
 
     return (
@@ -38,11 +38,15 @@ function Tabbed({ content }:{content: ContentItem[]}) {
                 <Tab num={0} activeTab={activeTab} onClick={setActiveTab} />
                 <Tab num={1} activeTab={activeTab} onClick={setActiveTab} />
                 <Tab num={2} activeTab={activeTab} onClick={setActiveTab} />
+
                 <Tab num={3} activeTab={activeTab} onClick={setActiveTab} />
             </div>
 
             {activeTab <= 2 ? (
-                <TabContent item={content.at(activeTab)!} />
+                <TabContent
+                    item={content.at(activeTab)}
+                    key={content.at(activeTab).summary}
+                />
             ) : (
                 <DifferentContent />
             )}
@@ -50,9 +54,7 @@ function Tabbed({ content }:{content: ContentItem[]}) {
     );
 }
 
-// console.log(<DifferentContent test={1361}/>)
-
-function Tab({ num, activeTab, onClick }:{num:number,activeTab:number, onClick:(tab:number) => void}) {
+function Tab({ num, activeTab, onClick }) {
     return (
         <button
             className={activeTab === num ? "tab active" : "tab"}
@@ -63,20 +65,34 @@ function Tab({ num, activeTab, onClick }:{num:number,activeTab:number, onClick:(
     );
 }
 
-function TabContent({ item }:{item:ContentItem}) {
+function TabContent({ item }) {
     const [showDetails, setShowDetails] = useState(true);
     const [likes, setLikes] = useState(0);
 
+    console.log("RENDER");
+
     function handleInc() {
-        setLikes(likes + 1);
+        setLikes((likes) => likes + 1);
     }
 
-    function handleUndo(){
-        setShowDetails(true)
-        setLikes(0);
+    function handleTripleInc() {
+        // setLikes(likes + 1);
+        // setLikes(likes + 1);
+        // setLikes(likes + 1);
+
+        setLikes((likes) => likes + 1);
+        setLikes((likes) => likes + 1);
+        setLikes((likes) => likes + 1);
     }
-    function handleUndoLater(){
-        setTimeout(handleUndo,2000);
+
+    function handleUndo() {
+        setShowDetails(true);
+        setLikes(0);
+        console.log(likes);
+    }
+
+    function handleUndoLater() {
+        setTimeout(handleUndo, 2000);
     }
 
     return (
@@ -92,7 +108,7 @@ function TabContent({ item }:{item:ContentItem}) {
                 <div className="hearts-counter">
                     <span>{likes} ❤️</span>
                     <button onClick={handleInc}>+</button>
-                    <button>+++</button>
+                    <button onClick={handleTripleInc}>+++</button>
                 </div>
             </div>
 

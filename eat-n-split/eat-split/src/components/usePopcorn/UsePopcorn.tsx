@@ -1,24 +1,29 @@
 import {
-    Box,
-    ListBox,
+    Box, ErrorMessage, Loader,
     Logo,
-    Main,
+    Main, MovieDetails,
     MovieList,
     NavBar,
     NumResult,
     Search,
-    WatchedBox,
     WatchedMovieList,
     WatchedSummary
 } from "@/components";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import Error from "next/error";
 
-interface MovieType {
+export interface MovieType{
     imdbID:string
     Title:string
     Year: string,
     Poster:string
 }
+export interface WatchedMovieType extends MovieType {
+    runtime: number;
+    imdbRating: number;
+    userRating: number;
+}
+const KEY='f84fc31d'
 
 const tempMovieData:MovieType[] = [
     {
@@ -44,7 +49,7 @@ const tempMovieData:MovieType[] = [
     },
 ];
 
-const tempWatchedData = [
+const tempWatchedData:WatchedMovieType[] = [
     {
         imdbID: "tt1375666",
         Title: "Inception",
@@ -69,24 +74,78 @@ const tempWatchedData = [
 
 
 export function UsePopcorn() {
-    const [movies, setMovies] = useState<MovieType[]>(tempMovieData);
-    const [watched, setWatched] = useState(tempWatchedData);
+    const [query, setQuery] = useState("")
+    const [movies, setMovies] = useState<MovieType[]>([]);
+    const [watched, setWatched] = useState<WatchedMovieType[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string>("")
+    const [selectedId, setSelectedId] = useState<string | null>(null);
+
+const handleSelectMovie = (id:string) => {
+    setSelectedId(selectedId => id=== selectedId? null : id);
+}
+
+const handleCloseMovie=()=>{
+    setSelectedId( null)
+}
+
+    useEffect(()=> {
+        if (query.length<3){
+            setMovies([]);
+            setError("")
+            return
+        }
+        (async function fetchMovies(){
+            try{
+                setIsLoading(true)
+                setError("")
+
+                const  res=await fetch(`https://www.omdbapi.com/?apikey=${KEY}&s=${query}`)
+
+                if (!res.ok) throw new Error("Something went wrong with fetch movies");
+
+                const data =await res.json()
+
+                if (data.Response === 'False'){
+                    throw new Error("movie not found")
+                }
+                setMovies(data.Search)
+            } catch (err) {
+                if (err instanceof Error) {
+                    setError(err.message);
+                } else {
+                    setError("Unknown error");
+                }
+            }finally {
+                setIsLoading(false)
+            }
+
+        }) ()
+    },[query])
 
     return (
         <>
             <NavBar >
                 <Logo/>
-                <Search/>
+                <Search query={query} setQuery={setQuery}/>
                 <NumResult movies={movies}/>
             </NavBar>
             <Main>
                 <Box>
-                    <MovieList movies={movies}/>
+                    {isLoading && <Loader/>}
+                    {!isLoading  && !error && <MovieList movies={movies} onSelectMovie={handleSelectMovie}/>}
+                    {error && <ErrorMessage message={error}/>}
                 </Box>
 
                 <Box >
-                        <WatchedSummary watched={watched} />
-                        <WatchedMovieList watched={watched}/>
+                    {selectedId ?(
+                        <MovieDetails selectedId={selectedId} onCloseMovie={handleCloseMovie}/>
+                    ) :(
+                        <>
+                            <WatchedSummary watched={watched} />
+                            <WatchedMovieList watched={watched}/>
+                        </>
+                    )}
                 </Box>
             </Main>
         </>
