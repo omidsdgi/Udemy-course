@@ -1,6 +1,9 @@
 import React from "react";
-
-export function WatchedMovie({movie}) {
+import {WatchedMovieType} from "@/components/usePopcorn/type/Types";
+interface WatchedMovieProps {
+    movie: WatchedMovieType;
+}
+export function WatchedMovie({movie}: WatchedMovieProps) {
     return (
         <li >
             <img src={movie.Poster} alt={`${movie.Title} poster`}/>

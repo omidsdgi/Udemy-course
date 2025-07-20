@@ -1,5 +1,8 @@
-
-export function Search({query,setQuery}) {
+ interface SearchProps {
+    query: string;
+    setQuery: (query: string) => void;
+}
+export function Search({query,setQuery}:SearchProps) {
     return (
             <input
                 className="search"

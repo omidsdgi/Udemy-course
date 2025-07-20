@@ -1,6 +1,7 @@
+import {CSSProperties} from "react";
 
 interface StarType{
-    onRate:()=>void
+    onRate:(rating:number)=>void
     onHoverIn:()=>void
     onHoverOut:()=>void
     full:boolean
@@ -8,7 +9,7 @@ interface StarType{
     size:number
 }
 export function Star({onRate,full,onHoverIn,onHoverOut,color,size}: StarType) {
-    const starStyle={
+    const starStyle:CSSProperties={
         width: `${size}px`,
         height: `${size}px`,
         display: 'block',

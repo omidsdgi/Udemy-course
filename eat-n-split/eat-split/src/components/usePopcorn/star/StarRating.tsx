@@ -1,14 +1,14 @@
 import {Star} from "@/components/usePopcorn/star/star";
-import {useState} from "react";
+import {CSSProperties, useState} from "react";
 
 
-const containerStyle = {
+const containerStyle:CSSProperties = {
     display: "flex",
     alignItems: "center",
     gap:"16px"
 }
 
-const starContainerStyle = {
+const starContainerStyle:CSSProperties = {
     display: "flex",
 }
 interface StarRatingProps {
@@ -17,17 +17,24 @@ interface StarRatingProps {
     size?: number
     messages?: string[]
     defaultRating?: number
+    onSetRating:(rating:number)=>void
 }
-export default function StarRating({maxRating=10,color='#fcc419',size=48,messages=[], defaultRating=0}:StarRatingProps) {
-    const textStyle = {
+export default function StarRating({maxRating=10,color='#fcc419',size=48,messages=[], defaultRating=0, onSetRating}:StarRatingProps) {
+    const textStyle:CSSProperties = {
         lineHeight:"1",
         margin:"0",
         color,
         fontSize:`${size /1.5}px`
-
     }
+
     const [rating, setRating] = useState(defaultRating)
     const [tempRating, setTempRating] = useState(0)
+
+    function handleRating(rating:number) {
+        setRating(rating);
+        onSetRating(rating);
+    }
+
 
     return (
         <div style={containerStyle}>

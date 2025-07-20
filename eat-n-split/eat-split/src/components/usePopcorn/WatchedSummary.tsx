@@ -1,11 +1,14 @@
 import React from "react";
+import {WatchedMovieType} from "@/components/usePopcorn/type/Types";
 
+interface WatchedSummaryProps {
+    watched: WatchedMovieType[];
+}
 
-
-const average = (arr) =>
+const average = (arr:number[]):number =>
     arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
-export function WatchedSummary({watched}) {
+export function WatchedSummary({watched}:WatchedSummaryProps) {
     const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
     const avgUserRating = average(watched.map((movie) => movie.userRating));
     const avgRuntime = average(watched.map((movie) => movie.runtime));

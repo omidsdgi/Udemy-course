@@ -1,5 +1,6 @@
 import React from "react";
-import {Movie, MovieType} from "@/components";
+import {Movie} from "@/components";
+import {MovieType} from "@/components/usePopcorn/type/Types";
 
 interface MovieListProps {
     movies: MovieType[]

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import {MovieType} from "@/components";
+import {MovieType} from "@/components/usePopcorn/type/Types";
 
 export function NumResult({movies}: {movies: MovieType[]}) {
     return (
