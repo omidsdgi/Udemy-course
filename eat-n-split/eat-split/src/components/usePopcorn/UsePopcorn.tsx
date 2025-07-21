@@ -93,6 +93,7 @@ const handleAddWatched=(movie:WatchedMovieType)=>{
         document.title = "usePopcorn 🎬";
     }, []);
 
+
     useEffect(function () {
 const controller=new AbortController();
         (async function fetchMovies(){
@@ -127,7 +128,7 @@ const controller=new AbortController();
             }finally {
                 setIsLoading(false)
             }
-
+handleCloseMovie()
         }) ()
         return function (){
             controller.abort()

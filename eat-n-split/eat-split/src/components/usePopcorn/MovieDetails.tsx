@@ -65,6 +65,19 @@ const handleAdd=()=>{
     onCloseMovie()
     }
     useEffect(() => {
+        function callback(e:KeyboardEvent) {
+            if (e.code ==="Escape"){
+                onCloseMovie()
+            }
+        }
+        document.addEventListener("keydown", callback);
+        return () => {
+            document.removeEventListener("keydown", callback);
+        }
+
+    }, [onCloseMovie]);
+
+    useEffect(() => {
         async function getMovieDetails(){
             setIsLoading(true);
             const res=await fetch(`https://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`)

@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {WatchedMovieType} from "@/components/usePopcorn/type/Types";
 interface WatchedMovieProps {
     movie: WatchedMovieType;
     onDeleteWatched: (id:string) => void;
 }
 export function WatchedMovie({movie,onDeleteWatched}: WatchedMovieProps) {
+
     return (
         <li >
             <img src={movie.poster} alt={`${movie.title} poster`}/>
