@@ -43,7 +43,7 @@ export default function StarRating({maxRating=10,color='#fcc419',size=48,message
                     <Star color={color} size={size}
                         key={i}
                         full={tempRating ? tempRating>=i+1 : rating >= i+1}
-                        onRate={() => setRating(i+1)}
+                        onRate={() => handleRating(i+1)}
                         onHoverIn={() => setTempRating(i + 1)}
                         onHoverOut={()=>setTempRating(0)}
                     />))}

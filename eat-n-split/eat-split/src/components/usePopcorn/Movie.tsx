@@ -1,5 +1,5 @@
 import React from "react";
-import {MovieType} from "@/components";
+import {MovieType} from "@/components/usePopcorn/type/Types";
 
 interface Prop {
     movie: MovieType;
