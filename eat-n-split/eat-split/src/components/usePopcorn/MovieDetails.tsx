@@ -49,7 +49,7 @@ const handleAdd=()=>{
             imdbID: string;
             runtime: number;
             imdbRating: number;
-            title: string;پا
+            title: string;
             poster: string
             userRating: number;
         } = {
@@ -76,9 +76,15 @@ const handleAdd=()=>{
             getMovieDetails()
         }
     },[selectedId])
-    console.log("selectedId:", selectedId);
-    console.log("isWatched:", isWatched);
-    console.log("userRating:", userRating);
+
+    useEffect(function () {
+        document.title=`🎬 ${title}`;
+        return function(){
+            document.title='usePopcorn'
+        }
+
+    }, [title]);
+
     return (
         <div className="details">
             {isLoading ? (

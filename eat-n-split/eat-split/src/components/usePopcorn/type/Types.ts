@@ -1,10 +1,10 @@
 export interface MovieType {
-    imdbID: string;
     Title: string;
     Year: string;
+    imdbID: string;
+    Type: string;
     Poster: string;
 }
-
 export interface WatchedMovieType {
     imdbID: string;
     title: string;
