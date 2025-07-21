@@ -93,8 +93,8 @@ const handleAddWatched=(movie:WatchedMovieType)=>{
         document.title = "usePopcorn 🎬";
     }, []);
 
-    useEffect(()=> {
-
+    useEffect(function () {
+const controller=new AbortController();
         (async function fetchMovies(){
             if (query.length<3){
                 setMovies([]);
@@ -105,7 +105,7 @@ const handleAddWatched=(movie:WatchedMovieType)=>{
                 setIsLoading(true)
                 setError("")
 
-                const  res=await fetch(`https://www.omdbapi.com/?apikey=${KEY}&s=${query}`)
+                const  res=await fetch(`https://www.omdbapi.com/?apikey=${KEY}&s=${query}`,{signal:controller.signal})
 
                 if (!res.ok) throw new Error("Failed to fetch movies");
 
@@ -115,10 +115,12 @@ const handleAddWatched=(movie:WatchedMovieType)=>{
                     throw new Error("movie not found")
                 }
                 setMovies(data.Search?? [])
-                console.log(data.Search)
+                setError("")
             } catch (err) {
                 if (err instanceof Error) {
+                if (err.name !=="AbortError"){
                     setError(err.message );
+                }
                 } else {
                     setError("Unknown error");
                 }
@@ -127,6 +129,9 @@ const handleAddWatched=(movie:WatchedMovieType)=>{
             }
 
         }) ()
+        return function (){
+            controller.abort()
+        }
     },[query])
 
     return (
