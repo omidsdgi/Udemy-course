@@ -13,6 +13,7 @@ export interface WatchedMovieType {
     runtime: number;
     imdbRating: number;
     userRating: number;
+    userRatingDecision: number;
 }
 
 export interface OMDbResponse {

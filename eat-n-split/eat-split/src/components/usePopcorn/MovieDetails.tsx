@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {KEY, Loader} from "@/components";
 import StarRating from "@/components/usePopcorn/star/StarRating";
 import {WatchedMovieType} from "@/components/usePopcorn/type/Types";
@@ -25,6 +25,11 @@ export function  MovieDetails({selectedId,onCloseMovie,onAddWatched,watched}:Mov
     const [movie, setMovie] = useState<MovieDetailData>({})
     const [isLoading, setIsLoading] = useState(false)
     const [userRating, setUserRating] = useState(0)
+    const countRef = useRef(0);
+    useEffect(() => {
+        if(userRating) countRef.current = countRef.current + 1;
+    }, [userRating]);
+
 
     const isWatched =selectedId !==null && watched.map((movie) => movie.imdbID).includes(selectedId);
     const watchedUserRating = watched.find(
@@ -52,6 +57,7 @@ const handleAdd=()=>{
             title: string;
             poster: string
             userRating: number;
+            userRatingDecisions:number;
         } = {
             imdbID:selectedId||'',
             title:title || '',
@@ -59,7 +65,8 @@ const handleAdd=()=>{
             poster:poster|| '',
             imdbRating:Number(Number(imdbRating).toFixed(2)),
             runtime: runtime ? Number(runtime.split(" ")[0]) : 0,
-            userRating
+            userRating,
+            userRatingDecisions:countRef.current
         }
         onAddWatched(newWatchedMovie)
     onCloseMovie()
