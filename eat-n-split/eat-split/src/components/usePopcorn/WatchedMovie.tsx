@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {WatchedMovieType} from "@/components/usePopcorn/type/Types";
 interface WatchedMovieProps {
     movie: WatchedMovieType;
