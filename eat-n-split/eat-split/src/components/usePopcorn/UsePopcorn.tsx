@@ -5,13 +5,12 @@ import {
     MovieList,
     NavBar,
     NumResult,
-    Search,
+    Search, useMovies,
     WatchedMovieList,
     WatchedSummary
 } from "@/components";
-import React, {useEffect, useState} from "react";
-import Error from "next/error";
-import {MovieType, OMDbResponse, WatchedMovieType} from "@/components/usePopcorn/type/Types";
+import React, {useEffect, useRef, useState} from "react";
+import {WatchedMovieType} from "@/components/usePopcorn/type/Types";
 
 
 export const KEY='f84fc31d' as const;
@@ -66,29 +65,25 @@ export const KEY='f84fc31d' as const;
 
 export function UsePopcorn() {
     const [query, setQuery] = useState<string>("")
-    const [movies, setMovies] = useState<MovieType[]>([]);
     const [watched, setWatched] = useState<WatchedMovieType[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string |null>(null)
     const [selectedId, setSelectedId] = useState<string | null>(null);
+    const {movies,isLoading,error}=useMovies(query);
+    const handleSelectMovie = (id:string) => {
+        setSelectedId(selectedId => id=== selectedId? null : id);
+    }
 
+    function handleCloseMovie(){
+        setSelectedId( null)
+    }
 
-const handleSelectMovie = (id:string) => {
-    setSelectedId(selectedId => id=== selectedId? null : id);
-}
+    const handleAddWatched=(movie:WatchedMovieType)=>{
+        setWatched((watched)=>[...watched,movie])
 
-const handleCloseMovie=()=>{
-    setSelectedId( null)
-}
-
-const handleAddWatched=(movie:WatchedMovieType)=>{
-    setWatched((watched)=>[...watched,movie])
-
-    // localStorage.setItem("watchedMovie",JSON.stringify([...watched,movie]))
+        // localStorage.setItem("watchedMovie",JSON.stringify([...watched,movie]))
     }
 
     const handleDeleteWatched=(id:string)=>{
-    setWatched(watched=> watched.filter(movie=>movie.imdbID !==id))
+        setWatched(watched=> watched.filter(movie=>movie.imdbID !==id))
     }
 
 
@@ -97,57 +92,22 @@ const handleAddWatched=(movie:WatchedMovieType)=>{
     }, []);
 
 
-    useEffect(() => {
-        localStorage.setItem("watchedMovie", JSON.stringify(watched));
-    }, [watched]);
+    const hasLoaded = useRef(false);
 
+// مرحله 1: فقط یک بار بخون از localStorage
     useEffect(() => {
         const storedValue = localStorage.getItem("watchedMovie");
         if (storedValue) {
             setWatched(JSON.parse(storedValue));
         }
+        hasLoaded.current = true;
     }, []);
 
-    useEffect(function () {
-const controller=new AbortController();
-        (async function fetchMovies(){
-            if (query.length<3){
-                setMovies([]);
-                setError("")
-                return
-            }
-            try{
-                setIsLoading(true)
-                setError("")
-
-                const  res=await fetch(`https://www.omdbapi.com/?apikey=${KEY}&s=${query}`,{signal:controller.signal})
-
-                if (!res.ok) throw new Error("Failed to fetch movies");
-
-                const data:OMDbResponse =await res.json()
-
-                if (data.Response === 'False'){
-                    throw new Error("movie not found")
-                }
-                setMovies(data.Search?? [])
-                setError("")
-            } catch (err) {
-                if (err instanceof Error) {
-                if (err.name !=="AbortError"){
-                    setError(err.message );
-                }
-                } else {
-                    setError("Unknown error");
-                }
-            }finally {
-                setIsLoading(false)
-            }
-handleCloseMovie()
-        }) ()
-        return function (){
-            controller.abort()
-        }
-    },[query])
+// مرحله 2: فقط وقتی مقدار از localStorage خونده شد، ذخیره کن
+    useEffect(() => {
+        if (!hasLoaded.current) return;
+        localStorage.setItem("watchedMovie", JSON.stringify(watched));
+    }, [watched]);
 
     return (
         <>
