@@ -83,16 +83,30 @@ const handleCloseMovie=()=>{
 
 const handleAddWatched=(movie:WatchedMovieType)=>{
     setWatched((watched)=>[...watched,movie])
+
+    // localStorage.setItem("watchedMovie",JSON.stringify([...watched,movie]))
     }
 
     const handleDeleteWatched=(id:string)=>{
     setWatched(watched=> watched.filter(movie=>movie.imdbID !==id))
     }
 
+
     useEffect(() => {
         document.title = "usePopcorn 🎬";
     }, []);
 
+
+    useEffect(() => {
+        localStorage.setItem("watchedMovie", JSON.stringify(watched));
+    }, [watched]);
+
+    useEffect(() => {
+        const storedValue = localStorage.getItem("watchedMovie");
+        if (storedValue) {
+            setWatched(JSON.parse(storedValue));
+        }
+    }, []);
 
     useEffect(function () {
 const controller=new AbortController();
