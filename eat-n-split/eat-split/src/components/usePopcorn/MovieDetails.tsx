@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState} from "react";
-import {KEY, Loader} from "@/components";
+import {KEY, Loader, useKey} from "@/components";
 import StarRating from "@/components/usePopcorn/star/StarRating";
 import {WatchedMovieType} from "@/components/usePopcorn/type/Types";
 
@@ -71,6 +71,8 @@ const handleAdd=()=>{
         onAddWatched(newWatchedMovie)
     onCloseMovie()
     }
+
+    useKey("Escape",onCloseMovie)
     useEffect(() => {
         function callback(e:KeyboardEvent) {
             if (e.code ==="Escape"){
