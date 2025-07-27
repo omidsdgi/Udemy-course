@@ -1,15 +1,18 @@
-import {JSX} from "react";
+import {Dispatch, JSX} from "react";
+import {Action, State} from "@/pages";
 
 type FinishScreenProps = {
     points: number;
     maxPossiblePoints: number;
     highScore: number;
+    dispatch: Dispatch<Action>;
 };
 
 export default function FinishScreen({
                                          points,
                                          maxPossiblePoints,
                                          highScore,
+                                         dispatch
                                      }: FinishScreenProps): JSX.Element {
     const percentage = (points / maxPossiblePoints) * 100;
 
@@ -21,15 +24,20 @@ export default function FinishScreen({
 
     return (
         <>
-        <p className="result">
-            {emoji} You scored <strong> {points} </strong> out of {maxPossiblePoints} ({Math.ceil(percentage)}%) <br/>
+            <p className="result">
+                {emoji} You scored <strong> {points} </strong> out
+                of {maxPossiblePoints} ({Math.ceil(percentage)}%) <br/>
 
-        </p>
-    <p className='highscore'>
-        ( High score     : {highScore} points   )
-    </p>
+            </p>
+            <p className='highscore'>
+                ( High score : {highScore} points )
+            </p>
+            <button className="btn btn-ui" onClick={() =>
+                dispatch({type: 'restart'})}>
+               Restart
+            </button>
         </>
-);
+    );
 }
 
 
